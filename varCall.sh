@@ -22,7 +22,7 @@ for sample in `cat $samplePath`
 do
     filename=${sample##*/}
     echo "processing $filename with bwa"
-    bwa mem -t 8 -B 2 $index ${sample} ${sample}_1.fq.gz ${sample}_2.fq.gz >\
+    bwa mem -t 8 -B 2 $index ${sample}_1.fq.gz ${sample}_2.fq.gz >\
      $alignDir/${filename}.sam 2>  $alignDir/${filename}.log
 done
 
@@ -35,4 +35,5 @@ do
   samtools view -b -o $alignDir/${output}.bam $alignDir/${filename}.sam
   samtools sort -o $alignDir/${output}.sorted.bam $alignDir/${output}.bam
   samtools index $alignDir/${output}.sorted.bam
+  echo "$filename done"
 done
