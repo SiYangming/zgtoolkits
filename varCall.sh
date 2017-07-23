@@ -22,7 +22,7 @@ for sample in `cat $samplePath`
 do
     filename=${sample##*/}
     bwa mem -t 8 -B 2 $index ${sample} ${sample}_1.fq.gz ${sample}_2.fq.gz >\
-     alignDir/${filename}.sam 2>  alignDir/${filename}.log
+     $alignDir/${filename}.sam 2>  $alignDir/${filename}.log
 done
 
 # convert sort and index
@@ -30,7 +30,7 @@ done
 for sample in `cat samplePath`
 do
   output=${sample##*/}
-  samtools view -b -o alignDir/${output}.bam alignDir/${filename}.sam
-  samtools sort -o alignDir/${output}.sorted.bam alignDir/${output}.bam
-  samtools index alignDir/${output}.sorted.bam
+  samtools view -b -o $alignDir/${output}.bam $alignDir/${filename}.sam
+  samtools sort -o $alignDir/${output}.sorted.bam $alignDir/${output}.bam
+  samtools index $alignDir/${output}.sorted.bam
 done
