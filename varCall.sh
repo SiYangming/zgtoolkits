@@ -18,7 +18,7 @@ mkdir -p /public1/wangjw/linzhi_20170715/alignment
 alignDir=/public1/wangjw/linzhi_20170715/alignment
 
 # alignment
-for sample in `cat samplePath`
+for sample in `cat $samplePath`
 do
     filename=${sample##*/}
     bwa mem -t 8 -B 2 $index ${sample} ${sample}_1.fq.gz ${sample}_2.fq.gz >\
