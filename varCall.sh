@@ -28,6 +28,8 @@ do
         bwa mem -t 8 -B 2 $index ${sample}_1.fq.gz ${sample}_2.fq.gz >\
         $alignDir/${filename}.sam 2>  $alignDir/${filename}.log
         echo "$filename done"
+    else
+        echo "$filename exists"
     fi
 done
 
