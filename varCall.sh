@@ -23,8 +23,12 @@ for sample in `cat $samplePath`
 do
     filename=${sample##*/}
     echo "processing $filename with bwa"
-    bwa mem -t 8 -B 2 $index ${sample}_1.fq.gz ${sample}_2.fq.gz >\
-     $alignDir/${filename}.sam 2>  $alignDir/${filename}.log
+    if [ ! -f  $alignDir/${filename}.sam ]
+    then
+        bwa mem -t 8 -B 2 $index ${sample}_1.fq.gz ${sample}_2.fq.gz >\
+        $alignDir/${filename}.sam 2>  $alignDir/${filename}.log
+        echo "$filename done"
+    fi
 done
 
 # convert sort and index
