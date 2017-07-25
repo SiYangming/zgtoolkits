@@ -1,4 +1,8 @@
-hawkDir=/scratch/atif/hawk
+#!/bin/bash
+
+# modified from HAWK
+
+hawkDir=$(awk 'BEGIN{FS="="}; $1~/hawkDir/ { print $2}' $config)
 isCaseSequence=1	# set to 0 if sequence is associated with control
 
 
