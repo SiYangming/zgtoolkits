@@ -49,7 +49,7 @@ do
   echo "processing $filename with samtools"
   output=${sample##*/}
   samtools view -@ $threads -b -o $alignDir/${output}.bam $alignDir/${filename}.sam
-  samtools sort -@ $threads -m 2G -o $alignDir/${output}.sorted.bam $alignDir/${output}.bam
+  samtools sort -@ $threads -m 1G -o $alignDir/${output}.sorted.bam $alignDir/${output}.bam
   samtools index -@ $threads $alignDir/${output}.sorted.bam
   echo "$filename done"
 done
