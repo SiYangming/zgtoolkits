@@ -19,8 +19,10 @@ fi
 # /public1/wangjw/linzhi_20170715/Data/PD/FCH2LCHCCXY_L7_wHAXPI051602-43
 samplePath=$1
 index=$2
-reference=$3
+suffix=$3
 threads=$4
+
+reference=${index}
 #index=/public1/wangjw/linzhi_20170715/chiIndex/hirsuta.fa
 #reference=/public1/wangjw/linzhi_20170715/chiIndex/hirsuta.fa
 
@@ -29,7 +31,7 @@ alignDir=alignment
 # alignment
 for sample in `cat $samplePath`
 do
-    filename=${sample##*/}
+    filename=${sample##*/}-${suffix}
     echo "processing $filename with bwa"
     if [ ! -f  $alignDir/${filename}.sam ]
     then
@@ -47,7 +49,7 @@ done
 for sample in `cat $samplePath`
 do
   echo "processing $filename with samtools"
-  output=${sample##*/}
+  output==${sample##*/}-${suffix}
   samtools view -@ $threads -b -o $alignDir/${output}.bam $alignDir/${filename}.sam
   samtools sort -@ $threads -m 1G -o $alignDir/${output}.sorted.bam $alignDir/${output}.bam
   samtools index -@ $threads $alignDir/${output}.sorted.bam
@@ -60,7 +62,7 @@ mkdir -p variant_bcftools
 varDir=variant_bcftools
 for sample in `cat $samplePath`
 do
-  output=${sample##*/}
+  output==${sample##*/}-${suffix}
   echo "processing $sample with bcftools"
   samtools mpileup  -vu -t AD,DP -f $reference $alignDir/${output}.sorted.bam | \
   bcftools call -vm -Ov > $varDir/${output%%.*}_raw_variants.vcf && echo "$sample done " &
