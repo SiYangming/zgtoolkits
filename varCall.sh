@@ -56,6 +56,7 @@ do
   echo "$filename done"
 done
 
+rm -rf *.sam
 
 # vairant calling with bcftools
 mkdir -p variant_bcftools
