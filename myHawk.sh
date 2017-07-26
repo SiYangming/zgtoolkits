@@ -4,7 +4,7 @@ set -e
 set -u
 set -o pipefail
 
-#modified from NIKS script
+#modified from NIKS script and HAWK script
 #echo $PATH
 
 ## test whether the input is suitable for analysis
@@ -31,6 +31,7 @@ then
 fi
 
 # data , program, and options setting
+wdDir=$(pwd)
 ctrDir=$(awk 'BEGIN{FS="="}; $1~/ctrDir/ { print $2}' $config)
 caseDir=$(awk 'BEGIN{FS="="}; $1~/caseDir/ { print $2}' $config)
 hawkDir=$(awk 'BEGIN{FS="="}; $1~/hawkDir/ { print $2}' $config)
@@ -85,17 +86,17 @@ done
 
 ## it will wirte sorted_files.txt total_kmers.txt under corresponding directory(ctrDir, caseDir)
 
-
+cd $wdDir
 # Finding significant k-mers
 if [ ! -e case_out_sig.fasta ] && [ ! -e control_out_sig.fasta ]
 then
   cp ${ctrDir}/sorted_files.txt ./control_sorted_files.txt
   cp ${ctrDir}/total_kmers.txt ./control_total_kmers.txt
   cp ${caseDir}/sorted_files.txt ./case_sorted_files.txt
-  cp ${caseDir}/total_kmers.txt ./total_kmers.txt
+  cp ${caseDir}/total_kmers.txt ./case_total_kmers.txt
 
-  caseCount=case_sorted_files.txt
-  controlCount=control_sorted_files.txt
+  caseCount=$(cat case_sorted_files.txt | wc -l );
+  controlCount=$(cat control_sorted_files.txt | wc -l);
 
   $hawkDir/hawk $caseCount $controlCount
   $hawkDir/bonf_fasta
@@ -115,3 +116,10 @@ awk '!/^>/ { next } { getline seq } length(seq) >= 49 { print $0 "\n" seq }' con
 
 #The k-mers with significant association to case and controls will be in 'case_out_sig.fasta' and 'control_out_sig.fasta'
 #and the assembled sequences will be in 'case_abyss.25_49.fasta' and 'control_abyss.25_49.fasta' respectively.
+
+# comemment out the follwing or modify for your purparse
+blastn -db ../BLAST/TAIR10 -query case_abyss.25_49.fa -outfmt 6 -out case.txt
+awk 'BEGIN{FS="\t"}  $3<100 && $4==$8 && $5==1 {print $2 "\t" $9 "\t" $10}' case.txt > case.bed
+
+blastn -db ../BLAST/TAIR10 -query control_abyss.25_49.fa -outfmt 6 -out control.txt
+awk 'BEGIN{FS="\t"}  $3<100 && $4==$8 && $5==1 {print $2 "\t" $9 "\t" $10}' control.txt > control.bed
