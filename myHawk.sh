@@ -8,18 +8,20 @@ set -o pipefail
 #echo $PATH
 
 ## test whether the input is suitable for analysis
+echo "Run this script under the root directory of your project\n"
+
 if [ $# -lt 1 ] && [ $(wc -l $1) -lt 8 ]
 then
-    echo -e "You should provide a configure file including the follwing setting \n "
-		echo -e "ctrDir=/scratch/atif/1000_genomes/BEB		#directory for control read files \n "
-    echo -e "caseDir=/scratch/atif/1000_genomes/BEB		#directory for case read files \n "
-		echo -e "hawkDir=/scratch/atif/hawk			#directory where hawk is installed \n "
-		echo -e "jellyfishDir=/home/atif/jellyfish-Hawk/bin		#directory where jellyfish is installed \n "
-    echo -e "abyssDir=/path/to/abyss/bin	#directory where abyss is installed \n "
-		echo -e "sortDir=/path/to/parallelsort/bin		#directory where parallel sort is installed \n "
-		echo -e "CORES=30 #number of cores to use for blast searches \n"
-		echo -e "KMERSIZE=31 # RD:61 \n "
-		exit 1
+  echo -e "You should provide a configure file including the follwing setting \n "
+  echo -e "ctrDir=/scratch/atif/1000_genomes/BEB		#directory for control read files \n "
+  echo -e "caseDir=/scratch/atif/1000_genomes/BEB		#directory for case read files \n "
+  echo -e "hawkDir=/scratch/atif/hawk			#directory where hawk is installed \n "
+  echo -e "jellyfishDir=/home/atif/jellyfish-Hawk/bin		#directory where jellyfish is installed \n "
+  echo -e "abyssDir=/path/to/abyss/bin	#directory where abyss is installed \n "
+  echo -e "sortDir=/path/to/parallelsort/bin		#directory where parallel sort is installed \n "
+  echo -e "CORES=30 #number of cores to use for blast searches \n"
+  echo -e "KMERSIZE=31 # RD:61 \n "
+exit 1
 fi
 
 config=$1
