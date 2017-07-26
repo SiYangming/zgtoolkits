@@ -8,26 +8,26 @@ set -o pipefail
 #echo $PATH
 
 ## test whether the input is suitable for analysis
-echo "Run this script under the root directory of your project\n"
+echo "Run this script under the root directory of your project"
 
 if [ $# -lt 1 ] && [ $(wc -l $1) -lt 8 ]
 then
-  echo -e "You should provide a configure file including the follwing setting \n "
-  echo -e "ctrDir=/scratch/atif/1000_genomes/BEB		#directory for control read files \n "
-  echo -e "caseDir=/scratch/atif/1000_genomes/BEB		#directory for case read files \n "
-  echo -e "hawkDir=/scratch/atif/hawk			#directory where hawk is installed \n "
-  echo -e "jellyfishDir=/home/atif/jellyfish-Hawk/bin		#directory where jellyfish is installed \n "
-  echo -e "abyssDir=/path/to/abyss/bin	#directory where abyss is installed \n "
-  echo -e "sortDir=/path/to/parallelsort/bin		#directory where parallel sort is installed \n "
-  echo -e "CORES=30 #number of cores to use for blast searches \n"
-  echo -e "KMERSIZE=31 # RD:61 \n "
+  echo "You should provide a configure file including the follwing setting  "
+  echo  "ctrDir=/scratch/atif/1000_genomes/BEB		#directory for control read files  "
+  echo  "caseDir=/scratch/atif/1000_genomes/BEB		#directory for case read files  "
+  echo  "hawkDir=/scratch/atif/hawk			#directory where hawk is installed  "
+  echo  "jellyfishDir=/home/atif/jellyfish-Hawk/bin		#directory where jellyfish is installed  "
+  echo  "abyssDir=/path/to/abyss/bin	#directory where abyss is installed  "
+  echo  "sortDir=/path/to/parallelsort/bin		#directory where parallel sort is installed  "
+  echo  "CORES=30 #number of cores to use for blast searches "
+  echo  "KMERSIZE=31 # RD:61  "
 exit 1
 fi
 
 config=$1
 if [ ! -f ${config} ] && [ ! -r ${config} ]
 then
-	echo -e "$1 is not a file or is not readable \n "
+	echo "$1 is not a file or is not readable  "
 fi
 
 # data , program, and options setting
@@ -87,15 +87,15 @@ done
 
 
 # Finding significant k-mers
-if [ -e case_out_sig.fasta ] && [ -e control_out_sig.fasta ]\
+if [ ! -e case_out_sig.fasta ] && [ ! -e control_out_sig.fasta ]
 then
-  mv ${ctrDir}/sorted_files.txt ./control_sorted_files.txt
-  mv ${ctrDir}/total_kmers.txt ./control_total_kmers.txt
-  mv ${caseDir}/sorted_files.txt ./case_sorted_files.txt
-  mv ${caseDir}/total_kmers.txt ./total_kmers.txt
+  cp ${ctrDir}/sorted_files.txt ./control_sorted_files.txt
+  cp ${ctrDir}/total_kmers.txt ./control_total_kmers.txt
+  cp ${caseDir}/sorted_files.txt ./case_sorted_files.txt
+  cp ${caseDir}/total_kmers.txt ./total_kmers.txt
 
-  caseCount=$(cat case_sorted_files.txt | wc -l);
-  controlCount=$(cat control_sorted_files.txt | wc -l);
+  caseCount=case_sorted_files.txt
+  controlCount=control_sorted_files.txt
 
   $hawkDir/hawk $caseCount $controlCount
   $hawkDir/bonf_fasta
