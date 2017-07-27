@@ -39,6 +39,7 @@ jellyfishDir=$(awk 'BEGIN{FS="="}; $1~/jellyfishDir/ { print $2}' $config)
 sortDir=$(awk 'BEGIN{FS="="}; $1~/sortDir/ { print $2}' $config)
 abyssDir=$(awk 'BEGIN{FS="="}; $1~/abyssDir/ { print $2}' $config)
 CORES=$(awk 'BEGIN{FS="="}; $1~/CORES/ { print $2}' $config)
+# kmer size should between 2,31
 KMERSIZE=$(awk 'BEGIN{FS="="}; $1~/KMERSIZE/ { print $2}' $config)
 
 # be aware of newline
