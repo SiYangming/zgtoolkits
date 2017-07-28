@@ -61,7 +61,7 @@ done
 
 rm -rf *.sam
 
-vairant calling with bcftools
+# vairant calling with bcftools
 mkdir -p variant_bcftools
 varDir=variant_bcftools
 for sample in `cat $samplePath`
