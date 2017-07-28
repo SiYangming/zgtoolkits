@@ -50,9 +50,9 @@ done
 
 for sample in `cat $samplePath`
 do
-  echo "processing $filename with samtools"
   filename=${sample##*/}-${suffix}
   output=${sample##*/}-${suffix}
+  echo "processing $filename with samtools"
   samtools view -@ $threads -b -o $alignDir/${output}.bam $alignDir/${filename}.sam
   samtools sort -@ $threads -m 1G -o $alignDir/${output}.sorted.bam $alignDir/${output}.bam
   samtools index -@ $threads $alignDir/${output}.sorted.bam
