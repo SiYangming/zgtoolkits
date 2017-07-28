@@ -35,8 +35,11 @@ do
     echo "processing $filename with bwa"
     if [ ! -f  $alignDir/${filename}.sam ]
     then
+        echo "bwa mem -t 8 -B 2 $index ${sample}_1.fq.gz ${sample}_2.fq.gz > \
+        $alignDir/${filename}.sam 2>$alignDir/${filename}.log"
+
         bwa mem -t 8 -B 2 $index ${sample}_1.fq.gz ${sample}_2.fq.gz >\
-        $alignDir/${filename}.sam 2>  $alignDir/${filename}.log
+        $alignDir/${filename}.sam 2>>  $alignDir/${filename}.log
         echo "$filename done"
     else
         echo "$filename exists"
@@ -50,8 +53,11 @@ for sample in `cat $samplePath`
 do
   echo "processing $filename with samtools"
   output=${sample##*/}-${suffix}
+  echo "samtools view -@ $threads -b -o $alignDir/${output}.bam $alignDir/${filename}.sam" >> $alignDir/${filename}.log
   samtools view -@ $threads -b -o $alignDir/${output}.bam $alignDir/${filename}.sam
+  echo "samtools sort -@ $threads -m 1G -o $alignDir/${output}.sorted.bam $alignDir/${output}.bam" >> $alignDir/${filename}.log
   samtools sort -@ $threads -m 1G -o $alignDir/${output}.sorted.bam $alignDir/${output}.bam
+  echo "samtools index -@ $threads $alignDir/${output}.sorted.bam" >> $alignDir/${filename}.log
   samtools index -@ $threads $alignDir/${output}.sorted.bam
   echo "$filename done"
 done
@@ -59,12 +65,12 @@ done
 rm -rf *.sam
 
 # vairant calling with bcftools
-mkdir -p variant_bcftools
-varDir=variant_bcftools
-for sample in `cat $samplePath`
-do
-  output=${sample##*/}-${suffix}
-  echo "processing $sample with bcftools"
-  samtools mpileup  -vu -t AD,DP -f $reference $alignDir/${output}.sorted.bam | \
-  bcftools call -vm -Ov > $varDir/${output%%.*}_raw_variants.vcf && echo "$sample done " &
-done
+# mkdir -p variant_bcftools
+# varDir=variant_bcftools
+# for sample in `cat $samplePath`
+# do
+#   output=${sample##*/}-${suffix}
+#   echo "processing $sample with bcftools"
+#   samtools mpileup  -vu -t AD,DP -f $reference $alignDir/${output}.sorted.bam | \
+#   bcftools call -vm -Ov > $varDir/${output%%.*}_raw_variants.vcf && echo "$sample done " &
+# done
