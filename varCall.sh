@@ -69,5 +69,7 @@ do
   output=${sample##*/}-${suffix}
   echo "processing $sample with bcftools"
   samtools mpileup  -vu -t AD,DP -f $reference $alignDir/${output}.sorted.bam | \
-  bcftools call -vm -Ov > $varDir/${output%%.*}_raw_variants.vcf && echo "$sample done " &
+  bcftools call -vm -Ob > $varDir/${output%%.*}_raw_variants.bcf && echo "$sample done " &
 done
+
+bcftools index $varDir/*_raw_variants.bcf
