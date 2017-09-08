@@ -68,4 +68,4 @@ dependencies:
 - pip:
   - et-xmlfile==1.0.1
 
-prefix: $HOM//miniconda3/envs/rnacocktail
+prefix: $HOME/miniconda3/envs/rnacocktail
