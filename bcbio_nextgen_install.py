@@ -31,8 +31,8 @@ REMOTES = {
 	
 MIRROS = {
     "bioconda": "https://nanomirrors.tuna.tsinghua.edu.cn/anaconda/cloud/bioconda/",
-	"conda-forge": "https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/conda-forge/",
-	"msys2": "https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/msys2/"
+    "conda-forge": "https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/conda-forge/",
+    "msys2": "https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/msys2/"
 }
 
 	
@@ -40,7 +40,7 @@ MIRROS = {
 def main(args, sys_argv):
     check_arguments(args)
     check_dependencies()
-    with bcbio_tmpdir(): # 建立临时bcbio安装环境
+    with bcbio_tmpdir(): 
         setup_data_dir(args)
         print("Installing isolated base python installation")
         anaconda = install_anaconda_python(args)
@@ -70,7 +70,6 @@ def _clean_args(sys_argv, args):
         base.append("--data")
     return base
 
-# bcbio-nextgen 系统升级, 与参数upgrade有关
 def bootstrap_bcbionextgen(anaconda, args):
     if args.upgrade == "development":
         git_tag = "@%s" % args.revision if args.revision != "master" else ""
