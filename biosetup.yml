@@ -1,0 +1,46 @@
+# version1.0
+# email: xuzhougeng@163.com
+channels:
+- https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/conda-forge
+- https://nanomirrors.tuna.tsinghua.edu.cn/anaconda/cloud/bioconda
+- https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/msys2
+- defaults
+dependencies:
+# System Requirement
+# python 
+- python-dateutil=2.6.1=py27_0
+- nextflow
+# Fastq Download And Quality Control Methods
+- sra-tools
+- fastx_toolkit
+- fastqc
+- trimmomatic
+- multiqc
+# Short Reads Alignment Methods
+- bwa
+- bowtie
+- bowtie2
+- hisat2
+- star
+# short sequence Alignment Methods
+- blast
+# Long Sequence Alignment Methods
+- mummer
+- pymummer
+- gmap
+- blat
+- lastz
+# SAM/BAM/BED Processing tools
+- samtools
+- bedtools
+# SNP Calling Methods
+- bcftools
+- freebayes
+- gatk4
+# VCF Processing Tools
+- snpeff
+# Alignment-Based Gene/Exon/Transcript Estimation Methods
+- htseq
+# Alignment-Free Transcript Estimation Methods
+- salmon
+- kallisto
