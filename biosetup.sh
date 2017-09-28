@@ -5,7 +5,7 @@ set -o pipefail
 
 ENV=$1
 # download miniconda and install
-URL=https://nanomirrors.tuna.tsinghua.edu.cn/anaconda/miniconda/Miniconda3-latest-Linux-$(uname -p).sh
+URL=https://nanomirrors.tuna.tsinghua.edu.cn/anaconda/miniconda/Miniconda3-latest-Linux-$(uname -m).sh
 PREFIX=$HOME/miniconda3
 if [ ! -d $PREFIX ]
 then
