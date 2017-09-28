@@ -6,9 +6,7 @@ channels:
 - https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/msys2
 - defaults
 dependencies:
-# System Requirement
-# python 
-- python-dateutil=2.6.1=py27_0
+# Workflow
 - nextflow
 # Fastq Download And Quality Control Methods
 - sra-tools
