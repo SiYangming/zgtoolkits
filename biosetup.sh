@@ -22,6 +22,6 @@ then
     $HOME/miniconda3/bin/conda env create  -f=biosetup.yml -p $ENV
 else
     echo "software install path is unset
-	exit(1)
+	exit 0
 fi
 	
