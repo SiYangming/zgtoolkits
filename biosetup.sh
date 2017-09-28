@@ -1,6 +1,7 @@
 #!/bin/bash
-set -e pipefail
+set -e 
 set -u
+set -o pipefail
 
 ENV=$1
 # download miniconda and install
@@ -15,4 +16,12 @@ fi
 
 wget --no-check-certificate \
 https://raw.github.com/xuzhougeng/zgtoolkits/master/biosetup.yml
-PREFIX=$HOME/miniconda3/bin/conda env create  -f=biosetup.yml -p $ENV
+
+if [ $ENV ]
+then
+    $HOME/miniconda3/bin/conda env create  -f=biosetup.yml -p $ENV
+else
+    echo "software install path is unset
+	exit(1)
+fi
+	
