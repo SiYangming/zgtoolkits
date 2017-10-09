@@ -22,7 +22,7 @@ def get_sra_address(geo=None):
     return sra_address
 
 # download sra files
-
+# I might use urllib to download data instead of shell in the future
 def sra2fq(sra_address, geo):
     os.makedirs(geo)
     os.chdir(geo)
@@ -36,7 +36,7 @@ def multi_fastqc():
     for fq_file in glob.glob('*.fastq'):
         cmd = 'fastqc -t 4 ' + fq_file
         subprocess.run(cmd, shell=True)
-    subprocess.run('multiqc *fastqc.zip --pdf', shell=True)
+    subprocess.run('multiqc *fastqc.zip -f ', shell=True)
 
 def main():
     import sys

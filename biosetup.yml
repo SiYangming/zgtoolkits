@@ -1,13 +1,13 @@
 # version1.0
 # email: xuzhougeng@163.com
 channels:
+- bioconda
 - https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/conda-forge
 - https://nanomirrors.tuna.tsinghua.edu.cn/anaconda/cloud/bioconda
-- https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/msys2
 - defaults
 dependencies:
 # Workflow
-- nextflow
+- luigi
 # Fastq Download And Quality Control Methods
 - sra-tools
 - fastx_toolkit
